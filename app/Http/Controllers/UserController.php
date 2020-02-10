@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return 'test';
+      //laravel fractal could be used as a view layer for json
+      return response(User::paginate()->toJson(), 200);
     }
 
     /**
@@ -35,8 +36,7 @@ class UserController extends Controller
         return response('User could not be created', 400);
       }
 
-        //fractal
-        return $user;
+      return response($user->toJson(), 200);
     }
 
     /**
@@ -47,7 +47,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $user;
+      return response($user->toJson(), 200);
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
       }
       $user->save();
 
-      return $user;
+      return response($user->toJson(), 200);
     }
 
     /**
@@ -85,7 +85,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return response('User Deleted', 200);
+      $user->delete();
+      return response('User Deleted', 200);
     }
 }
