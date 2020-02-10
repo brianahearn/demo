@@ -20,8 +20,8 @@ class CreateAssetsTable extends Migration
             $table->string("summary")->nullable(true);
             $table->integer("model_id")->unsigned();
             $table->string("model_type");
-            $table->string("file_path");
-            $table->string("file_ext");            
+            $table->string("file_path")->nullable();
+            $table->string("file_ext")->nullable();
             $table->softDeletes();
         });
     }

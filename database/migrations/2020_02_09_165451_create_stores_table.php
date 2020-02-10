@@ -24,7 +24,7 @@ class CreateStoresTable extends Migration
             $table->string('zip', 191)->nullable();
             $table->string('lat', 191)->nullable();
             $table->string('lng', 191)->nullable();
-            $table->string('note', 191)->nullable();                                                          
+            $table->string('note', 191)->nullable();
         });
     }
 

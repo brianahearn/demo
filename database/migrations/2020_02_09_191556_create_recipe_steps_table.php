@@ -17,10 +17,10 @@ class CreateRecipeStepsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('recipe_id')->unsigned();
-            $table->integer('step_number');
-            $table->string('step_title');
-            $table->text('step_description');
-            $table->bigInteger('asset_id')->unsigned();
+            $table->integer('step_number')->nullable();
+            $table->string('step_title')->nullable();
+            $table->text('step_description')->nullable();
+            $table->bigInteger('asset_id')->unsigned()->nullable();
         });
     }
 
