@@ -42,6 +42,7 @@ Develop an API that allows a person track and manage their grocery shopping and 
 - Store Shopping List
 - Store Shopping List Products
 - Stores
+- Hashing/UUIDs/etc.
 - Budget / Tracking Expenses
 
 ## Schema - Subject to change

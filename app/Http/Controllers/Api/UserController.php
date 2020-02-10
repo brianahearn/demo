@@ -14,10 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //return list of users
-        //csrf_token() is required in forms but in our case we haven't setup oauth yet so
-        //I'm using this call to grab the token for use in postman
-        return csrf_token();
+        return 'test';
     }
 
     /**
@@ -50,7 +47,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user = User::find($user->id);
+        return $user;
     }
 
     /**
@@ -67,16 +64,17 @@ class UserController extends Controller
         'email' => 'required|email',
         'password' => 'required'
       ]);
-      //$user = User::find($user->id);
-      // $user = User::find($user);
+
       $user->name = $request->get('name');
       $user->email = $request->get('email');
+
       if($request->get('password') !== '')
       {
         $user->password = bcrypt($request->get('password'));
       }
       $user->save();
-return 'test2';
+
+      return $user;
     }
 
     /**
@@ -88,5 +86,6 @@ return 'test2';
     public function destroy(User $user)
     {
         $user->delete();
+        return response('User Deleted', 200);
     }
 }

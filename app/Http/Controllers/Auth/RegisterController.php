@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -61,13 +62,37 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \App\User
+     * @param  [string] name
+     * @param  [string] email
+     * @param  [string] password
+     * @param  [string] password_confirmation
+     * @return [string] message
      */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
+
+     public function create(Request $request)
+     {
+       try {
+         $request->validate([
+             'name' => 'required|string',
+             'email' => 'required|string|email|unique:users',
+             'password' => 'required|string|confirmed'
+         ]);
+         $user = new User([
+             'name' => $request->name,
+             'email' => $request->email,
+             'password' => bcrypt($request->password)
+         ]);
+         $user->save();
+       } catch (\Exception $e) {
+         return $e;
+         //  $errorCode = $e->errorInfo[1];
+         // if($errorCode == 1062)
+         // {
+         //   return 'duplicate entry';
+         // }
+       }
+         return response()->json([
+             'message' => 'Successfully created user!'
+         ], 201);
+     }
 }

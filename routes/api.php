@@ -13,6 +13,31 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    // These should not be protected by any middleware.
+    Route::post('login', 'Auth\LoginController@login');
+    Route::post('register', 'Auth\RegisterController@create');
+    // These auth calls are protect by middleware auth:api - meaning you need to
+    // be logged in to access them.
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', 'AuthController@logout');
+        Route::get('user', 'AuthController@user');
+
+        //testing route included for testing functionality unrelated to current app
+        Route::get('test','Api\TestController@index');
+
+        //apiResource declares all the common REST endpoints for an API
+        Route::apiResources([
+          'users' => 'Api\UserController',
+          'stores' => 'Api\StoreController',
+          'pantries' => 'Api\PantryController',
+          'categories' => 'Api\CategoryController',
+          'products' => 'Api\ProductController',
+          'recipes' => 'Api\RecipeController',
+        ]);
+    });
 });
